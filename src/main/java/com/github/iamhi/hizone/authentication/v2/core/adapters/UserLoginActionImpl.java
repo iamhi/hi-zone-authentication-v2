@@ -29,6 +29,7 @@ record UserLoginActionImpl(
             .flatMap(userDto -> createAuthTokensAction.apply(userDto, (accessToken, responseToken) -> new UserLoginResponse(
                 userDto.uuid(),
                 userDto.username(),
+                userDto.roles(),
                 accessToken,
                 responseToken
             )));
