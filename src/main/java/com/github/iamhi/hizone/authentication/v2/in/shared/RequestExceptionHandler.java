@@ -2,6 +2,7 @@ package com.github.iamhi.hizone.authentication.v2.in.shared;
 
 import com.github.iamhi.hizone.authentication.v2.core.exceptions.InvalidLoginThrowable;
 import com.github.iamhi.hizone.authentication.v2.core.exceptions.InvalidRefreshTokenThrowable;
+import com.github.iamhi.hizone.authentication.v2.core.exceptions.NoPermissionsThrowable;
 import com.github.iamhi.hizone.authentication.v2.core.exceptions.UserCreationErrorThrowable;
 import com.github.iamhi.hizone.authentication.v2.core.exceptions.InvalidAuthorizationTokenThrowable;
 import com.github.iamhi.hizone.authentication.v2.core.exceptions.UserNotFoundThrowable;
@@ -21,6 +22,9 @@ public record RequestExceptionHandler() implements Function<Throwable, Mono<Serv
         return switch (throwable) {
             case UserCreationErrorThrowable userCreationErrorThrowable ->
                 ServerResponse.badRequest().bodyValue(userCreationErrorThrowable.getMessage());
+
+            case NoPermissionsThrowable noPermissionsThrowable ->
+                ServerResponse.status(HttpStatus.UNAUTHORIZED).bodyValue(noPermissionsThrowable.getMessage());
 
             case InvalidAuthorizationTokenThrowable invalidAuthorizationTokenThrowable ->
                 ServerResponse.status(HttpStatus.UNAUTHORIZED).bodyValue(invalidAuthorizationTokenThrowable.getMessage());
