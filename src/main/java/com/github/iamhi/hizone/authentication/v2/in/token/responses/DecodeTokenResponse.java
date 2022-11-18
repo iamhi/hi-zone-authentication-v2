@@ -5,6 +5,6 @@ import java.util.List;
 public record DecodeTokenResponse(
     String uuid,
     String username,
-    List<String> role
+    List<String> roles
 ) {
 }
