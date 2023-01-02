@@ -1,11 +1,11 @@
 package com.github.iamhi.hizone.authentication.v2.in.token.actions;
 
 import com.github.iamhi.hizone.authentication.v2.in.token.requests.InvalidateTokensRequest;
-import com.github.iamhi.hizone.authentication.v2.in.token.responses.InvalidateTokenResponse;
+import com.github.iamhi.hizone.authentication.v2.in.token.responses.InvalidateTokensResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.function.Function;
 
 @FunctionalInterface
-public interface InvalidateTokensInAction extends Function<InvalidateTokensRequest, Mono<InvalidateTokenResponse>> {
+public interface InvalidateTokensInAction extends Function<InvalidateTokensRequest, Mono<InvalidateTokensResponse>> {
 }
