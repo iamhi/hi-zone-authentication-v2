@@ -46,7 +46,6 @@ public class LoginUserRoute {
                 description = "Login using username and passowrd",
                 operationId = "Login",
                 tags = "User operations",
-                security = {@SecurityRequirement(name = SwaggerSettingsConfig.AUTHENTICATION_SCHEME_NAME)},
                 requestBody = @RequestBody(
                     required = true,
                     content = @Content(

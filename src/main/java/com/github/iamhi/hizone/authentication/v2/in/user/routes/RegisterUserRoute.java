@@ -45,7 +45,6 @@ public class RegisterUserRoute {
                 description = "Register with username, password and email",
                 operationId = "Register",
                 tags = "User operations",
-                security = {@SecurityRequirement(name = SwaggerSettingsConfig.AUTHENTICATION_SCHEME_NAME)},
                 requestBody = @RequestBody(
                     required = true,
                     content = @Content(
