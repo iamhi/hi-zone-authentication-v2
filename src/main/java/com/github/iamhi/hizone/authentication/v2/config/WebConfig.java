@@ -22,6 +22,7 @@ public class WebConfig {
         corsConfig.addAllowedMethod(HttpMethod.POST);
         corsConfig.addAllowedHeader("Content-Type");
         corsConfig.addAllowedHeader("Accept");
+        corsConfig.addAllowedHeader("User-Agent");
         corsConfig.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
