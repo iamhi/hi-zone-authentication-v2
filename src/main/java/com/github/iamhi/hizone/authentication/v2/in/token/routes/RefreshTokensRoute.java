@@ -7,7 +7,6 @@ import com.github.iamhi.hizone.authentication.v2.in.token.actions.RefreshTokensI
 import com.github.iamhi.hizone.authentication.v2.in.token.requests.RefreshTokensRequest;
 import com.github.iamhi.hizone.authentication.v2.in.shared.RoutingDefaults;
 import com.github.iamhi.hizone.authentication.v2.in.token.responses.RefreshTokensResponse;
-import com.github.iamhi.hizone.authentication.v2.in.user.requests.UserLoginRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Mono;
 
 import java.net.HttpURLConnection;
 import java.util.Optional;
@@ -53,7 +53,6 @@ public class RefreshTokensRoute {
                 tags = "Token operations",
                 security = {@SecurityRequirement(name = SwaggerSettingsConfig.AUTHENTICATION_SCHEME_NAME)},
                 requestBody = @RequestBody(
-                    required = true,
                     content = @Content(
                         mediaType = MediaType.APPLICATION_JSON_VALUE,
                         schema = @Schema(implementation = RefreshTokensRequest.class)
@@ -73,6 +72,7 @@ public class RefreshTokensRoute {
     )
     RouterFunction<ServerResponse> refreshTokensRouteCompose() {
         return route(POST("/token/refresh"), request -> request.bodyToMono(RefreshTokensRequest.class)
+            .switchIfEmpty(Mono.just(new RefreshTokensRequest("")))
             .map(refreshTokensRequest -> populateIfEmpty(request, refreshTokensRequest))
             .flatMap(refreshTokensAction)
             .contextWrite(context -> routingDefaults.userTokenConsumer().apply(context, request))
