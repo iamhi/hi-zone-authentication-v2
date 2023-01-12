@@ -24,4 +24,6 @@ public class CookiesConfig {
     Boolean httpOnly;
 
     String domain;
+
+    Boolean useSecure = false;
 }

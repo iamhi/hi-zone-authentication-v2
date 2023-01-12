@@ -37,8 +37,9 @@ public class OkResponseWithCookiesCreator<T> implements Function<CookiesResponse
 
     ResponseCookie createAccessTokenCookie(String accessToken) {
         return ResponseCookie.from(cookiesConfig.getAccessTokenCookieName(), accessToken)
-//            .domain(cookiesConfig.getDomain())
+            .domain(cookiesConfig.getDomain())
             .httpOnly(cookiesConfig.getHttpOnly())
+            .secure(cookiesConfig.getUseSecure())
             .maxAge(cookiesConfig.getAccessTokenCookieMaxAge())
             .path(cookiesConfig.getAccessTokenCookiePath())
             .build();
@@ -46,8 +47,9 @@ public class OkResponseWithCookiesCreator<T> implements Function<CookiesResponse
 
     ResponseCookie createRefreshTokenCookie(String refreshToken) {
         return ResponseCookie.from(cookiesConfig.getRefreshTokenCookieName(), refreshToken)
-//            .domain(cookiesConfig.getDomain())
+            .domain(cookiesConfig.getDomain())
             .httpOnly(cookiesConfig.getHttpOnly())
+            .secure(cookiesConfig.getUseSecure())
             .maxAge(cookiesConfig.getRefreshTokenCookieMaxAge())
             .path(cookiesConfig.getRefreshTokenCookiePath())
             .build();

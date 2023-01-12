@@ -43,6 +43,7 @@ public record InvalidateCookies(
         return ResponseCookie.from(cookiesConfig.getAccessTokenCookieName(), "")
             .domain(cookiesConfig.getDomain())
             .httpOnly(cookiesConfig.getHttpOnly())
+            .secure(cookiesConfig.getUseSecure())
             .maxAge(0)
             .path(cookiesConfig.getAccessTokenCookiePath())
             .build();
@@ -52,6 +53,7 @@ public record InvalidateCookies(
         return ResponseCookie.from(cookiesConfig.getRefreshTokenCookieName(), "")
             .domain(cookiesConfig.getDomain())
             .httpOnly(cookiesConfig.getHttpOnly())
+            .secure(cookiesConfig.getUseSecure())
             .maxAge(0)
             .path(cookiesConfig.getRefreshTokenCookiePath())
             .build();
