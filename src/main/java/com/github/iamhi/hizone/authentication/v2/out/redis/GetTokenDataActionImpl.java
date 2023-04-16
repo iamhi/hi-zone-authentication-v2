@@ -10,6 +10,6 @@ record GetTokenDataActionImpl(
 ) implements GetTokenDataAction {
     @Override
     public Mono<String> apply(String tokenId) {
-        return redisRepository.getReactiveConnection().get(tokenId);
+        return Mono.justOrEmpty(tokenId).flatMap(redisRepository.getReactiveConnection()::get);
     }
 }

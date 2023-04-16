@@ -11,7 +11,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: "authenticationv-2"
+      POSTGRES_DB: "authentication-v2"
 volumes:
   mongodb_data_container:
   postgres_data:

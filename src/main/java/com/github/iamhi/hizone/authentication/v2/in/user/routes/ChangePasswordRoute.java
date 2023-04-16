@@ -1,17 +1,15 @@
 package com.github.iamhi.hizone.authentication.v2.in.user.routes;
 
-import com.github.iamhi.hizone.authentication.v2.config.SwaggerSettingsConfig;
 import com.github.iamhi.hizone.authentication.v2.in.shared.CookiesResponseInput;
 import com.github.iamhi.hizone.authentication.v2.in.shared.RoutingDefaults;
-import com.github.iamhi.hizone.authentication.v2.in.user.actions.AddRoleAction;
-import com.github.iamhi.hizone.authentication.v2.in.user.requests.AddRoleRequest;
-import com.github.iamhi.hizone.authentication.v2.in.user.responses.AddRoleResponse;
+import com.github.iamhi.hizone.authentication.v2.in.user.actions.ChangePasswordAction;
+import com.github.iamhi.hizone.authentication.v2.in.user.requests.ChangePasswordRequest;
+import com.github.iamhi.hizone.authentication.v2.in.user.responses.ChangePasswordResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.annotations.RouterOperation;
 import org.springdoc.core.annotations.RouterOperations;
@@ -29,26 +27,25 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 
 @RequiredArgsConstructor
 @Configuration
-public class AddRoleRoute {
+public class ChangePasswordRoute {
 
-    private final RoutingDefaults<AddRoleResponse> routingDefaults;
+    private final RoutingDefaults<ChangePasswordResponse> routingDefaults;
 
-    private final AddRoleAction addRoleAction;
+    private final ChangePasswordAction changePasswordAction;
 
     @Bean
     @RouterOperations(
         @RouterOperation(
             method = RequestMethod.POST,
             operation = @Operation(
-                description = "Add a role using role secret",
-                operationId = "AddRole",
+                description = "Change password using username, oldPassowrd and newPassword",
+                operationId = "Change password",
                 tags = "User operations",
-                security = {@SecurityRequirement(name = SwaggerSettingsConfig.AUTHENTICATION_SCHEME_NAME)},
                 requestBody = @RequestBody(
                     required = true,
                     content = @Content(
                         mediaType = MediaType.APPLICATION_JSON_VALUE,
-                        schema = @Schema(implementation = AddRoleRequest.class)
+                        schema = @Schema(implementation = ChangePasswordRequest.class)
                     )
                 ),
                 responses = {
@@ -56,16 +53,16 @@ public class AddRoleRoute {
                         responseCode = HttpURLConnection.HTTP_OK + "",
                         content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = AddRoleResponse.class)
+                            schema = @Schema(implementation = ChangePasswordResponse.class)
                         )
                     )
                 }
             )
         )
     )
-    RouterFunction<ServerResponse> addRoleRouteCompose() {
-        return route(POST("/user/role"), request -> request.bodyToMono(AddRoleRequest.class)
-            .flatMap(addRoleAction)
+    RouterFunction<ServerResponse> changePasswordRouteCompose() {
+        return route(POST("/user/changepassword"), request -> request.bodyToMono(ChangePasswordRequest.class)
+            .flatMap(changePasswordAction)
             .contextWrite(context -> routingDefaults.userTokenConsumer().apply(context, request))
             .flatMap(response -> routingDefaults.okResponseWithCookiesCreator().apply(
                 new CookiesResponseInput<>(

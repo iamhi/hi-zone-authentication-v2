@@ -2,6 +2,7 @@ package com.github.iamhi.hizone.authentication.v2.in.shared;
 
 import com.github.iamhi.hizone.authentication.v2.config.CookiesConfig;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
@@ -23,8 +24,8 @@ public class OkResponseWithCookiesCreator<T> implements Function<CookiesResponse
 
     @Override
     public Mono<ServerResponse> apply(CookiesResponseInput cookiesResponseInput) {
-        return ServerResponse.ok()
-            .cookies(cookieMultiMap -> cookieMultiMap.addAll(createTokens(cookiesResponseInput.getAccessToken(), cookiesResponseInput.getRefreshToken())))
+        return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+//            .cookies(cookieMultiMap -> cookieMultiMap.addAll(createTokens(cookiesResponseInput.getAccessToken(), cookiesResponseInput.getRefreshToken())))
             .bodyValue(cookiesResponseInput.getBody());
     }
 

@@ -17,6 +17,10 @@ import org.springframework.context.annotation.Configuration;
         @Server(
             url = "http://api.ibeenhi.com/hi-zone-api/authentication-v2",
             description = "Http variant"
+        ),
+        @Server(
+            url = "http://localhost:8081/hi-zone-api/authentication-v2",
+            description = "Localhost variant"
         )
     })
 @SecurityScheme(
