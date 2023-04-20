@@ -25,7 +25,7 @@ public class OkResponseWithCookiesCreator<T> implements Function<CookiesResponse
     @Override
     public Mono<ServerResponse> apply(CookiesResponseInput cookiesResponseInput) {
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-//            .cookies(cookieMultiMap -> cookieMultiMap.addAll(createTokens(cookiesResponseInput.getAccessToken(), cookiesResponseInput.getRefreshToken())))
+            .cookies(cookieMultiMap -> cookieMultiMap.addAll(createTokens(cookiesResponseInput.getAccessToken(), cookiesResponseInput.getRefreshToken())))
             .bodyValue(cookiesResponseInput.getBody());
     }
 
